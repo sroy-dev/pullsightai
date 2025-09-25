@@ -1,8 +1,9 @@
 // src/lib/axios.ts
 import axios from "axios";
+import { getBaseUrl } from "./utils";
 
 const apiClient = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    baseURL: getBaseUrl(),
     withCredentials: true, // for cookie-based auth
 });
 

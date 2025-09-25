@@ -14,8 +14,7 @@ export function getAuthUrl(
         | URLSearchParams
         | undefined = {}
 ): string {
-    const apiUrl =
-        process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
+    const apiUrl = getBaseUrl() || "http://localhost:3001/api";
     const baseUrl = `${apiUrl}/auth/${provider}`;
     const queryParams = new URLSearchParams(options).toString();
     return queryParams ? `${baseUrl}?${queryParams}` : baseUrl;
@@ -34,4 +33,13 @@ export function generatePath(path: string, params: Record<string, string | numbe
   return Object.keys(params).reduce((acc, key) => {
     return acc.replace(`:${key}`, encodeURIComponent(String(params[key])));
   }, path);
+}
+
+export function getBaseUrl() {
+    if (typeof window === "undefined") {
+        // Server-side (SSR)
+        return process.env.SSR_API_URL;
+    }
+    // Client-side
+    return process.env.NEXT_PUBLIC_API_URL;
 }
