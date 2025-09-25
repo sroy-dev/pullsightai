@@ -82,7 +82,7 @@ const CurrentPlan = () => {
                     </p>
                 </div>
                 <MoreToken className="w-full sm:w-auto ml-auto mb-2 lg:mb-0 cursor-pointer border px-4 py-2 rounded-md text-sm hover:bg-accent/50 transition-colors flex items-center gap-2">
-                    Buy More Token
+                    Buy More Tokens
                 </MoreToken>
                 <Link
                     href={ROUTE_CONSTANTS.APP_SUBSCRIPTION_PLANS}
