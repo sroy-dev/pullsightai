@@ -4,7 +4,6 @@ import { githubEndpoints } from "../endpoints/github";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Repository } from "@/types/repository";
 import { bitbucketEndpoints } from "../endpoints/bitbucket";
-import { gitlabEndpoints } from "../endpoints/gitlab";
 
 interface UseRepositoryQueryParams {
     provider?: Provider;
@@ -25,7 +24,6 @@ export const useRepositoryQuery = ({
     > = {
         github: githubEndpoints.getRepos,
         bitbucket: bitbucketEndpoints.getRepos,
-        gitlab: gitlabEndpoints.getRepos,
     };
 
     const queryFn = queryFnMap[provider];
@@ -67,7 +65,6 @@ export const useOtherRepositoryQuery = ({
     > = {
         github: githubEndpoints.getOtherRepos,
         bitbucket: bitbucketEndpoints.getOtherRepos,
-        gitlab: gitlabEndpoints.getOtherRepos,
     };
 
     const queryFn = queryFnMap[provider];

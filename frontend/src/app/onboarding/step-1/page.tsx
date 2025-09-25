@@ -83,7 +83,7 @@ const Step1Page = () => {
                 .catch((error) => {
                     console.error("Error updating user:", error);
                 });
-        } else if (provider === "bitbucket" || provider === "gitlab") {
+        } else if (provider === "bitbucket") {
             addOrganization({
                 slug: selectedOrg?.slug || "",
                 type: selectedOrg?.type || "",

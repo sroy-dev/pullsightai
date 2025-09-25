@@ -1,4 +1,4 @@
-import { Bitbucket, Github, GitLab } from "@/components/reusable/icons";
+import { Bitbucket, Github } from "@/components/reusable/icons";
 import { Button } from "@/components/ui/button";
 import { getAuthUrl } from "@/lib/utils";
 import Link from "next/link";
@@ -29,18 +29,6 @@ const OauthButtons: FC = () => {
                     className="flex items-center gap-2"
                 >
                     <Bitbucket /> BitBucket
-                </a>
-            </Button>
-            <Button
-                asChild
-                className="flex-grow-1 !bg-white !text-black hover:!bg-gray-200 text-base"
-                size={"xl"}
-            >
-                <a
-                    href={getAuthUrl("gitlab")}
-                    className="flex items-center gap-2"
-                >
-                    <GitLab /> GitLab
                 </a>
             </Button>
         </div>

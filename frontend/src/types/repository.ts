@@ -14,7 +14,7 @@ export interface Repository {
     createdAt: string;
     updatedAt: string;
     time?: string;
-    provider: "github" | "gitlab" | "bitbucket";
+    provider: "github" | "bitbucket";
     integrations?: {
         bitbucket?: {
             connected: boolean;

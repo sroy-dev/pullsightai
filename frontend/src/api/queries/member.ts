@@ -2,7 +2,6 @@ import { ApiResponse } from "@/types/response";
 import { Provider, User } from "@/types/user";
 import { githubEndpoints } from "../endpoints/github";
 import { bitbucketEndpoints } from "../endpoints/bitbucket";
-import { gitlabEndpoints } from "../endpoints/gitlab";
 import { useQuery } from "@tanstack/react-query";
 
 export const useOrganizationMembersQuery = ({
@@ -14,8 +13,7 @@ export const useOrganizationMembersQuery = ({
 }) => {
     const queryFnMap: Record<Provider, () => Promise<ApiResponse<User[]>>> = {
         github: githubEndpoints.getTeamMembers,
-        bitbucket: bitbucketEndpoints.getTeamMembers, // Uncomment and implement if needed
-        gitlab: gitlabEndpoints.getTeamMembers, // Uncomment and implement if needed
+        bitbucket: bitbucketEndpoints.getTeamMembers
     };
 
     const queryFn = queryFnMap[provider];

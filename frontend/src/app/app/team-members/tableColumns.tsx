@@ -9,8 +9,6 @@ import ConfirmDialog from "@/components/reusable/ConfirmDialog";
 import { useUpdateTeamMemberMutation } from "@/api/queries/workspace";
 import { TeamMember } from "@/types/user";
 import AdminGuard from "@/components/auth/AdminGuard";
-import UpgradePlanDialog from "@/components/reusable/UpgradePlanDialog";
-import { useUpgradePlanDialog } from "@/hooks/useUpgradePlanDialog";
 import { useAuthStore } from "@/store/authStore";
 
 interface TeamMemberStatusSwitchProps {
@@ -26,7 +24,6 @@ const TeamMemberStatusSwitch = ({
 }: TeamMemberStatusSwitchProps) => {
     const { selectedWorkspace } = useAuthStore();
 
-    const { dialogRef, showUpgradeDialog } = useUpgradePlanDialog();
     const [showConfirm, setShowConfirm] = useState(false);
     const { mutateAsync } = useUpdateTeamMemberMutation();
 
@@ -42,29 +39,7 @@ const TeamMemberStatusSwitch = ({
     };
 
     const handleSwitchChange = () => {
-        const isTrialPlan = selectedWorkspace?.currentPlan?.isDefault;
-        const isFreePlan =
-            !isTrialPlan && selectedWorkspace?.currentPlan?.isFree;
-        const isPaidPlan = !isTrialPlan && !isFreePlan;
-
-        if ((isTrialPlan && !member?.isActive) || isFreePlan) {
-            showUpgradeDialog();
-        } else if (
-            isPaidPlan &&
-            !member?.isActive &&
-            (selectedWorkspace?.noOfActiveMembers ?? 0) >=
-                (selectedWorkspace?.currentPlan?.numOfSeat ?? 0)
-        ) {
-            showUpgradeDialog({
-                featureName: "Increase Seats",
-                description:
-                    "Your team has reached the maximum number of seats. Please increase your seat count to activate this member.",
-                featureDescription:
-                    "Increase the number of seats in your plan to add this member.",
-            });
-        } else {
-            setShowConfirm(true);
-        }
+        setShowConfirm(true);
     };
 
     return (
@@ -90,7 +65,6 @@ const TeamMemberStatusSwitch = ({
                     confirmText={isActive ? "Deactivate" : "Activate"}
                     variant={isActive ? "destructive" : "default"}
                 />
-                <UpgradePlanDialog ref={dialogRef} />
             </AdminGuard>
         </>
     );

@@ -4,7 +4,6 @@ import { ApiResponse } from "@/types/response";
 import { Organization } from "@/types/organization";
 import { Provider } from "@/types/user";
 import { bitbucketEndpoints } from "../endpoints/bitbucket";
-import { gitlabEndpoints } from "../endpoints/gitlab";
 import { useAuthStore } from "@/store/authStore";
 
 export const useOrganizationQuery = ({
@@ -20,7 +19,6 @@ export const useOrganizationQuery = ({
     > = {
         github: githubEndpoints.getOrgs,
         bitbucket: bitbucketEndpoints.getOrgs, // Uncomment and implement if needed
-        gitlab: gitlabEndpoints.getOrgs, // Uncomment and implement if needed
     };
 
     const queryFn = queryFnMap[provider];
@@ -44,19 +42,18 @@ export const useOrganizationQuery = ({
 export const useOrganizationAddMutation = ({
     provider = "bitbucket",
 }: {
-    provider?: "bitbucket" | "gitlab";
+    provider?: "bitbucket";
 }) => {
     const { user, setUser, setSelectedWorkspace, workspaces, setWorkspaces } =
         useAuthStore();
     const queryFn: Record<
-        "bitbucket" | "gitlab",
+        "bitbucket",
         (params: {
             slug: string;
             type?: string;
         }) => Promise<ApiResponse<Organization>>
     > = {
         bitbucket: bitbucketEndpoints.addOrg,
-        gitlab: gitlabEndpoints.addOrg,
     };
 
     return useMutation<Organization, Error, { slug: string; type?: string }>({

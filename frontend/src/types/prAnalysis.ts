@@ -20,7 +20,7 @@ export interface AIComment {
 export interface PRAnalysisData {
     _id: string;
     prId: string;
-    provider: "github" | "gitlab" | "bitbucket";
+    provider: "github" | "bitbucket";
     workspaceSlug: string;
     repositorySlug: string;
     prNumber: string;

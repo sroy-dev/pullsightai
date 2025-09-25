@@ -34,26 +34,8 @@ const AppTopBar = () => {
         (workspace) =>
             !workspace.onboardingStep || workspace.onboardingStep == 0
     );
-    const activePlan = selectedWorkspace?.currentPlan;
-    const isTrialPlan = activePlan?.plan?.isDefault;
 
-    // Calculate trial progress percentage
-    const getTotalTrialDays = () => {
-        if (!activePlan?.periodStart || !activePlan?.periodEnd) return 14; // Default 14 days
-        const start = new Date(activePlan.periodStart);
-        const end = new Date(activePlan.periodEnd);
-        return Math.ceil(
-            (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)
-        );
-    };
 
-    const remainingDays = getRemainingDays(activePlan?.periodEnd || "");
-    const totalTrialDays = getTotalTrialDays();
-    const usedDays = totalTrialDays - remainingDays;
-    const progressPercentage = Math.min(
-        Math.max((usedDays / totalTrialDays) * 100, 0),
-        100
-    );
 
     // Custom 3x3 Grid Icon Component
     const GridIcon = () => (
@@ -91,37 +73,35 @@ const AppTopBar = () => {
 
     return (
         <div className="xl:h-[88px] h-[60px] flex items-center border-b gap-x-2 lg:gap-x-4 xl:px-5 pr-3 pl-1 fixed top-0 left-0 right-0 z-40 bg-background">
-            {pathName !== ROUTE_CONSTANTS.APP_SUBSCRIPTION_PLANS && (
-                <Button
-                    variant="ghost"
-                    className="xl:hidden relative px-3"
-                    onClick={toggleSidebar}
-                >
-                    <div className="relative w-4 h-4">
-                        {/* Grid Icon */}
-                        <div
-                            className={`absolute inset-0 transition-all duration-300 ${
-                                isSidebarOpen
-                                    ? "opacity-0 rotate-90 scale-75"
-                                    : "opacity-100 rotate-0 scale-100"
-                            }`}
-                        >
-                            <GridIcon />
-                        </div>
-
-                        {/* Cross Icon */}
-                        <div
-                            className={`absolute -left-0.5 -top-0.5 transition-all duration-300 ${
-                                isSidebarOpen
-                                    ? "opacity-100 rotate-0 scale-100"
-                                    : "opacity-0 rotate-90 scale-75"
-                            }`}
-                        >
-                            <X className="!h-5 !w-5" />
-                        </div>
+            <Button
+                variant="ghost"
+                className="xl:hidden relative px-3"
+                onClick={toggleSidebar}
+            >
+                <div className="relative w-4 h-4">
+                    {/* Grid Icon */}
+                    <div
+                        className={`absolute inset-0 transition-all duration-300 ${
+                            isSidebarOpen
+                                ? "opacity-0 rotate-90 scale-75"
+                                : "opacity-100 rotate-0 scale-100"
+                        }`}
+                    >
+                        <GridIcon />
                     </div>
-                </Button>
-            )}
+
+                    {/* Cross Icon */}
+                    <div
+                        className={`absolute -left-0.5 -top-0.5 transition-all duration-300 ${
+                            isSidebarOpen
+                                ? "opacity-100 rotate-0 scale-100"
+                                : "opacity-0 rotate-90 scale-75"
+                        }`}
+                    >
+                        <X className="!h-5 !w-5" />
+                    </div>
+                </div>
+            </Button>
             <Image
                 src="/images/logo-icon.svg"
                 alt="pull sight logo"
@@ -132,71 +112,6 @@ const AppTopBar = () => {
             <span className="text-base font-medium hidden md:inline">
                 Welcome back, {user?.displayName || user?.username} 👋
             </span>
-
-            {!isPlanExpired(activePlan?.periodEnd || "") && activePlan && (
-                <AdminGuard>
-                    {isTrialPlan ? (
-                        <div className="text-sm text-gray-400 bg-yellow-400/20 rounded-xl py-1 xl:py-2 px-3 hidden lg:inline-flex items-center gap-5 ml-auto">
-                            <CircularProgress
-                                value={progressPercentage}
-                                size={48}
-                                strokeWidth={8}
-                                className="flex-shrink-0"
-                            />
-                            <div>
-                                <div className="text-white font-semibold">
-                                    {remainingDays} day(s) left in your free trial
-                                </div>
-                                <div>
-                                    {numToHip(
-                                        selectedWorkspace?.planRemainingToken || 0,
-                                        2
-                                    )}
-                                    /
-                                    {numToHip(
-                                        selectedWorkspace?.planTotalToken || 0,
-                                        2
-                                    )}{" "}
-                                    tokens are left
-                                </div>
-                            </div>
-                            <Link
-                                className="gap-1 flex items-center bg-yellow-400 text-neutral-900 rounded-md px-2 py-1.5 text-sm font-medium ml-10"
-                                href={ROUTE_CONSTANTS.APP_SUBSCRIPTION_PLANS}
-                            >
-                                Upgrade Now
-                                <Rocket className="h-4 w-auto" />
-                            </Link>
-                        </div>
-                    ) :   (
-                        <div className="border mr-auto p-1 md:p-2 rounded-lg">
-                            <p className="hidden xl:block text-xs text-gray-500 mb-0">
-                                Available Tokens
-                            </p>
-                            <p className="text-[14px] lg:text-xl font-bold flex flex-col md:flex-row md:items-end">
-                                <span>
-                                    {numToHip(
-                                        (selectedWorkspace?.planRemainingToken ||
-                                            0) +
-                                            (selectedWorkspace?.packRemainingToken ||
-                                                0),
-                                        2
-                                    )}{" "}
-                                    /{" "}
-                                </span>
-                                <span className="text-muted-foreground text-xs lg:text-sm">
-                                    {numToHip(
-                                        (selectedWorkspace?.planTotalToken || 0) +
-                                            (selectedWorkspace?.packTotalToken ||
-                                                0),
-                                        2
-                                    )}
-                                </span>
-                            </p>
-                        </div>
-                    ) }
-                </AdminGuard>
-            )}
 
             <Dropdown>
                 <Dropdown.Trigger>

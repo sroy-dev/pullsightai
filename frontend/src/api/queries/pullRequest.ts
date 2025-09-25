@@ -5,7 +5,6 @@ import { githubEndpoints } from "../endpoints/github";
 import { bitbucketEndpoints } from "../endpoints/bitbucket";
 import { useQuery } from "@tanstack/react-query";
 import { PRAnalysis, PRAnalysisData } from "@/types/prAnalysis";
-import { gitlabEndpoints } from "../endpoints/gitlab";
 import { analysisEndpoints } from "../endpoints/analysis";
 
 export const usePullRequestQuery = ({
@@ -23,7 +22,6 @@ export const usePullRequestQuery = ({
     > = {
         github: githubEndpoints.getPRs,
         bitbucket: bitbucketEndpoints.getPRs,
-        gitlab: gitlabEndpoints.getPRs,
     };
 
     const queryFn = queryFnMap[provider];
@@ -60,7 +58,6 @@ export const useReviewPullRequestQuery = ({
     > = {
         github: githubEndpoints.reviewPr,
         bitbucket: bitbucketEndpoints.reviewPr,
-        gitlab: gitlabEndpoints.reviewPr,
     };
 
     const queryFn = queryFnMap[provider];

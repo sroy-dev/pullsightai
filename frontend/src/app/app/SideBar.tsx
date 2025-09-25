@@ -77,17 +77,6 @@ const AppSideBar = () => {
                             <NavLink
                                 className="flex items-center font-medium gap-3 pl-3 pr-4 py-3.5 rounded-xl hover:bg-white/10 transition"
                                 activeClassName="!bg-white text-gray-800"
-                                href={ROUTE_CONSTANTS.APP_SUBSCRIPTION}
-                                prefetch
-                            >
-                                <CreditCard className="h-4 w-4" />
-                                <span className="text-base">Subscription</span>
-                            </NavLink>
-                        </SidebarMenuItem>
-                        <SidebarMenuItem>
-                            <NavLink
-                                className="flex items-center font-medium gap-3 pl-3 pr-4 py-3.5 rounded-xl hover:bg-white/10 transition"
-                                activeClassName="!bg-white text-gray-800"
                                 href={ROUTE_CONSTANTS.APP_SETTINGS}
                                 prefetch
                             >

@@ -142,7 +142,7 @@ const Step5Page = () => {
             {/* Footer with action button */}
             <ActionFooter
                 confirmButtonClassname="!bg-primary hover:!bg-gray-200"
-                buttonText="Start 14-Days Free Trial"
+                buttonText="Get Started"
                 isEnabled={
                     selectedMembers.length > 0 &&
                     selectedRepositories.length > 0
