@@ -14,7 +14,7 @@ export function getAuthUrl(
         | URLSearchParams
         | undefined = {}
 ): string {
-    const apiUrl = getBaseUrl() || "http://localhost:3001/api";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
     const baseUrl = `${apiUrl}/auth/${provider}`;
     const queryParams = new URLSearchParams(options).toString();
     return queryParams ? `${baseUrl}?${queryParams}` : baseUrl;
