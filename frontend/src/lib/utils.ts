@@ -38,7 +38,7 @@ export function generatePath(path: string, params: Record<string, string | numbe
 export function getBaseUrl() {
     if (typeof window === "undefined") {
         // Server-side (SSR)
-        return process.env.SSR_API_URL;
+        return process.env.SSR_API_URL || process.env.NEXT_PUBLIC_API_URL;
     }
     // Client-side
     return process.env.NEXT_PUBLIC_API_URL;
